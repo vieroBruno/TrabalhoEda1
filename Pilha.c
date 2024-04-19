@@ -16,7 +16,7 @@ int pilha_cheia( Pilha p ){
 	return p.topo == p.capacidade - 1;
 }
 
-int empilha(Pilha *p, int info ){
+int empilha(Pilha *p, char info ){
 	if( pilha_cheia( *p ) )
 		return ERRO_PILHA_CHEIA;
 	
@@ -24,7 +24,7 @@ int empilha(Pilha *p, int info ){
 	return 1; // Sucesso.
 }
 
-int desempilha( Pilha *p, int *info ){
+int desempilha( Pilha *p, char *info ){
 	if( pilha_vazia( *p ) )
 		return ERRO_PILHA_VAZIA;
 	
@@ -32,7 +32,7 @@ int desempilha( Pilha *p, int *info ){
 	return 1; // Sucesso.
 }
 
-int le_topo( Pilha p, int *info ){
+int le_topo( Pilha p, char *info ){
 	if( pilha_vazia( p ) )
 		return ERRO_PILHA_VAZIA;
 	
@@ -56,3 +56,18 @@ void desaloca_pilha( Pilha *p ){
 	free( p->dados );
 }
 
+int precedencia( char info ) {
+	switch( info ) {
+		case '(':
+			return 0;
+			break;
+		case '+':
+		case '-':
+			return 1;
+			break;
+		case '*':
+		case '/':
+			return 2;
+			break;
+	}
+}
