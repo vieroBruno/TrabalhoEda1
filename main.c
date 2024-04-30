@@ -5,9 +5,6 @@
 #include "Pilha.h"
 
 int intervalo( char c );
-void calc_posFixa( char *expressao, int tamanho);
-int eh_digito(char ch);
-
 
 int main(int argc, char *argv[]) {
 	setlocale(LC_ALL,"Portuguese");
@@ -64,7 +61,7 @@ int main(int argc, char *argv[]) {
 				break;
 			case ')':
 				while( ( le_topo( p, &x ) != ERRO_PILHA_VAZIA ) && ( x != '(' ) ) {
-					desempilha( &p, &x);
+					desempilha( &p, &x );
 					S[cont++] = x;
 				}
 				if( pilha_vazia( p ) ) {
@@ -105,7 +102,7 @@ int main(int argc, char *argv[]) {
 			for(i=0; E[i]!='\0'; i++) {
 				printf(" %c", E[i]);
 			}
-			printf("\n\n Expressão Final: \n\n"); 
+			printf("\n\n Expressão Final: \n\n");
 			for(i=0; S[i]!='\0'; i++) {
 				printf(" %c", S[i]);
 			}			
@@ -115,9 +112,6 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	calc_posFixa(&S,tam_str);
-	
-
 	return 0;
 }
 
@@ -126,70 +120,4 @@ int intervalo( char c ) {
 		return 0;
 	}
 	return 1;
-}
-
-void calc_posFixa( char *expressao , int tamanho){
-	Pilha p2;
-	inic_pilha( &p2, tamanho);
-	int i=0;
-	
-	while( expressao[i]!= '\0' ){
-		char c = expressao[i];
-		
-		if(eh_digito(c)){
-			int num = c - '0';
-			empilha( &p2, num);
-			printf("\nChegouu no digito");
-			
-		} else {
-			printf("c: %c",c);
-			int aux1 ,aux2;
-			int resultado;
-			
-			desempilha(&p2,&aux2);
-			desempilha(&p2,&aux1);
-			
-			
-			switch(c){
-				case '+':
-					resultado = aux1 + aux2;
-					break;
-				case '-':
-					resultado = aux1 - aux2;
-					break;
-				case '*':
-					printf("\nChegouu no vezes");
-					resultado = aux1 * aux2;
-					
-					break;
-				case '/':
-					if(aux2==0){
-						printf("Erro: Divisão por zero \n");
-						return -1;
-					}
-					resultado = aux1 / aux2;
-					break;
-				default:
-					printf("\nOperador inválido: %c \n", c );
-					return -1;
-					break;					
-			}
-				
-			empilha(&p2,resultado);		
-			
-		}
-		i++;
-		mostra_pilha(p2);
-		
-	}
-	
-	//	mostra_pilha(p2);
-				
-	desaloca_pilha( &p2 );
-	
-	
-}
-
-int eh_digito(char ch){
-	return (ch >= '0' && ch <= '9');
 }

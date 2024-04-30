@@ -44,7 +44,7 @@ void mostra_pilha( Pilha p ){
 	if( pilha_vazia( p ) )
 		printf("Pilha vazia!\n");
 	else{
-		printf("\n Resultado Final:\n");
+		printf("Dados da pilha:\n");
 		int i;
 		for( i = 0 ; i <= p.topo ; i++ )
 			printf("%d\n", p.dados[i] );
@@ -71,5 +71,3 @@ int precedencia( char info ) {
 			break;
 	}
 }
-
-
