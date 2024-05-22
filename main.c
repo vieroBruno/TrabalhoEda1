@@ -6,6 +6,11 @@
 
 int intervalo( char c );
 
+int calc_posFixa( char *expressao, int tamanho, int *resultado );
+int eh_digito(char ch);
+
+
+
 int main(int argc, char *argv[]) {
 	setlocale(LC_ALL,"Portuguese");
 	
@@ -17,7 +22,7 @@ int main(int argc, char *argv[]) {
 			printf("\n Valores Inválidos!");
 		}
 		valid = 1;
-		printf("\n Insira a Expressão: ");
+		printf("\n Insira a Expressâo: ");
 		gets( temp );
 		tam_str = strlen(temp);
 		temp2 = malloc( tam_str );
@@ -57,11 +62,15 @@ int main(int argc, char *argv[]) {
 				S[cont++] = c;
 				break;
 			case '(':
-				empilha( &p, c );
+				empilha1( &p, c );
 				break;
 			case ')':
 				while( ( le_topo( p, &x ) != ERRO_PILHA_VAZIA ) && ( x != '(' ) ) {
+
 					desempilha( &p, &x );
+
+					desempilha1( &p, &x );
+
 					S[cont++] = x;
 				}
 				if( pilha_vazia( p ) ) {
@@ -69,7 +78,7 @@ int main(int argc, char *argv[]) {
 					printf("\n Erro: ')' sem '('!");
 					deu_erro = 1;
 				} else {
-					desempilha( &p, &x );
+					desempilha1( &p, &x );
 				}
 				break;
 			case '+':
@@ -78,13 +87,13 @@ int main(int argc, char *argv[]) {
 			case '/':
 				le_topo( p, &x );
 				if( pilha_vazia( p ) || ( x == '(' ) ) {
-					empilha( &p, c );
+					empilha1( &p, c );
 				} else {
 					while( ( le_topo( p, &x ) != ERRO_PILHA_VAZIA ) && ( precedencia( x ) >= precedencia( c ) ) ) {
-						desempilha( &p, &x );
+						desempilha1( &p, &x );
 						S[cont++] = x;
 					}
-					empilha( &p, c );
+					empilha1( &p, c );
 				}
 				break;
 		}
@@ -92,7 +101,7 @@ int main(int argc, char *argv[]) {
 	
 	if(!deu_erro) {
 		while( ( le_topo( p, &x ) != ERRO_PILHA_VAZIA ) && ( x != '(' ) ) {
-			desempilha( &p, &x );
+			desempilha1( &p, &x );
 			S[cont++] = x;
 		}
 		if( pilha_vazia ) {
@@ -112,6 +121,16 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
+
+
+	int res;
+	if( calc_posFixa( S, tam_str, &res ) ) {
+		printf("\n\n Resultado: %d", res);
+	} else {
+		printf("\n\n Erro!");
+	}
+
+
 	return 0;
 }
 
@@ -121,3 +140,71 @@ int intervalo( char c ) {
 	}
 	return 1;
 }
+
+
+int calc_posFixa( char *expressao , int tamanho, int *resultado ){
+	Pilha p2;
+	inic_pilha( &p2, tamanho );
+	int i=0;
+	
+	while( expressao[i]!= '\0' ){
+		char c = expressao[i];
+		
+		if(eh_digito(c)){
+			int num = c - '0';
+			empilha2( &p2, num );
+//			printf("\nChegouu no digito");
+			
+		} else {
+//			printf("c: %c",c);
+			int n1 ,n2;
+			int resultado;
+			
+			desempilha2( &p2, &n2 );
+			desempilha2( &p2, &n1 );
+			
+			switch(c){
+				case '+':
+					resultado = n1 + n2;
+					break;
+				case '-':
+					resultado = n1 - n2;
+					break;
+				case '*':
+					resultado = n1 * n2;
+					break;
+				case '/':
+					if(n2==0){
+						printf("Erro: Divisão por zero \n");
+						return -1;
+					}
+					resultado = n1 / n2;
+					break;
+				default:
+					printf("\nOperador inválido: %c \n", c );
+					return -1;
+					break;					
+			}
+			
+			empilha2( &p2, resultado );		
+			
+		}
+		i++;
+//		mostra_pilha( p2 );
+		
+	}
+	
+	desempilha2( &p2, resultado );
+	
+	//	mostra_pilha(p2);
+				
+	desaloca_pilha( &p2 );
+	
+	return 1;
+}
+
+int eh_digito(char ch){
+	return (ch >= '0' && ch <= '9');
+}
+
+

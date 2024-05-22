@@ -16,7 +16,7 @@ int pilha_cheia( Pilha p ){
 	return p.topo == p.capacidade - 1;
 }
 
-int empilha(Pilha *p, char info ){
+int empilha1(Pilha *p, char info ){
 	if( pilha_cheia( *p ) )
 		return ERRO_PILHA_CHEIA;
 	
@@ -24,7 +24,23 @@ int empilha(Pilha *p, char info ){
 	return 1; // Sucesso.
 }
 
-int desempilha( Pilha *p, char *info ){
+int desempilha1( Pilha *p, char *info ){
+	if( pilha_vazia( *p ) )
+		return ERRO_PILHA_VAZIA;
+	
+	*info = p->dados[p->topo--];
+	return 1; // Sucesso.
+}
+
+int empilha2(Pilha *p, int info ){
+	if( pilha_cheia( *p ) )
+		return ERRO_PILHA_CHEIA;
+	
+	p->dados[++p->topo] = info;
+	return 1; // Sucesso.
+}
+
+int desempilha2( Pilha *p, int *info ){
 	if( pilha_vazia( *p ) )
 		return ERRO_PILHA_VAZIA;
 	
@@ -71,3 +87,4 @@ int precedencia( char info ) {
 			break;
 	}
 }
+

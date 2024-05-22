@@ -1,18 +1,35 @@
 [Editor_2]
-CursorCol=1
-CursorRow=1
+<<<<<<< Updated upstream
+CursorCol=40
+CursorRow=15
 TopLine=1
 LeftChar=1
 [Editor_1]
-CursorCol=2
-CursorRow=13
-TopLine=25
+CursorCol=19
+CursorRow=72
+TopLine=29
+=======
+CursorCol=30
+CursorRow=17
+TopLine=1
+LeftChar=1
+[Editor_1]
+CursorCol=26
+CursorRow=39
+TopLine=1
+>>>>>>> Stashed changes
 LeftChar=1
 [Editors]
-Order=0,1,2
+Order=0,2,1
 Focused=0
 [Editor_0]
-CursorCol=16
-CursorRow=53
-TopLine=35
+<<<<<<< Updated upstream
+CursorCol=7
+CursorRow=85
+TopLine=77
+=======
+CursorCol=38
+CursorRow=108
+TopLine=79
+>>>>>>> Stashed changes
 LeftChar=1
